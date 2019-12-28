@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/betaflight-motor-remap/precache-manifest.30eef6c08547ec1128c6d89a2eb74ed3.js"
+  "/BetaflightMotorRemap/precache-manifest.c617fe376e58eb7bc880564472ee6b4d.js"
 );
 
 workbox.clientsClaim();
@@ -28,7 +28,7 @@ self.__precacheManifest = [].concat(self.__precacheManifest || []);
 workbox.precaching.suppressWarnings();
 workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
 
-workbox.routing.registerNavigationRoute("/betaflight-motor-remap/index.html", {
+workbox.routing.registerNavigationRoute("/BetaflightMotorRemap/index.html", {
   
   blacklist: [/^\/_/,/\/[^\/]+\.[^\/]+$/],
 });
