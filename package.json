@@ -1,6 +1,6 @@
 {
-  "name": "flicker-image-search",
-  "homepage": "https://galkremer1.github.io/flicker-image-search/",
+  "name": "betaflight-motor-remap",
+  "homepage": "https://galkremer1.github.io/betaflight-motor-remap/",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
