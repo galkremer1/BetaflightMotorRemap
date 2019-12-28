@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/BetaflightMotorRemap/precache-manifest.c617fe376e58eb7bc880564472ee6b4d.js"
+  "/BetaflightMotorRemap/precache-manifest.8d902c505a54d56a7434325a40726115.js"
 );
 
 workbox.clientsClaim();
