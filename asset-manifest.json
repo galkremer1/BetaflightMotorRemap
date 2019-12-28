@@ -1,15 +1,15 @@
 {
-  "main.css": "/flicker-image-search/static/css/main.dd9abd64.chunk.css",
-  "main.js": "/flicker-image-search/static/js/main.8a9138a6.chunk.js",
-  "main.js.map": "/flicker-image-search/static/js/main.8a9138a6.chunk.js.map",
-  "runtime~main.js": "/flicker-image-search/static/js/runtime~main.75c3c9e2.js",
-  "runtime~main.js.map": "/flicker-image-search/static/js/runtime~main.75c3c9e2.js.map",
-  "static/css/2.0bee0877.chunk.css": "/flicker-image-search/static/css/2.0bee0877.chunk.css",
-  "static/js/2.89029376.chunk.js": "/flicker-image-search/static/js/2.89029376.chunk.js",
-  "static/js/2.89029376.chunk.js.map": "/flicker-image-search/static/js/2.89029376.chunk.js.map",
-  "index.html": "/flicker-image-search/index.html",
-  "precache-manifest.4be0046e98699e00cefdb15ac0399e96.js": "/flicker-image-search/precache-manifest.4be0046e98699e00cefdb15ac0399e96.js",
-  "service-worker.js": "/flicker-image-search/service-worker.js",
-  "static/css/2.0bee0877.chunk.css.map": "/flicker-image-search/static/css/2.0bee0877.chunk.css.map",
-  "static/css/main.dd9abd64.chunk.css.map": "/flicker-image-search/static/css/main.dd9abd64.chunk.css.map"
+  "main.css": "/betaflight-motor-remap/static/css/main.dd9abd64.chunk.css",
+  "main.js": "/betaflight-motor-remap/static/js/main.c89a9b41.chunk.js",
+  "main.js.map": "/betaflight-motor-remap/static/js/main.c89a9b41.chunk.js.map",
+  "runtime~main.js": "/betaflight-motor-remap/static/js/runtime~main.20878563.js",
+  "runtime~main.js.map": "/betaflight-motor-remap/static/js/runtime~main.20878563.js.map",
+  "static/css/2.0bee0877.chunk.css": "/betaflight-motor-remap/static/css/2.0bee0877.chunk.css",
+  "static/js/2.89029376.chunk.js": "/betaflight-motor-remap/static/js/2.89029376.chunk.js",
+  "static/js/2.89029376.chunk.js.map": "/betaflight-motor-remap/static/js/2.89029376.chunk.js.map",
+  "index.html": "/betaflight-motor-remap/index.html",
+  "precache-manifest.d0d66880513b10b451a5154da2376e7e.js": "/betaflight-motor-remap/precache-manifest.d0d66880513b10b451a5154da2376e7e.js",
+  "service-worker.js": "/betaflight-motor-remap/service-worker.js",
+  "static/css/2.0bee0877.chunk.css.map": "/betaflight-motor-remap/static/css/2.0bee0877.chunk.css.map",
+  "static/css/main.dd9abd64.chunk.css.map": "/betaflight-motor-remap/static/css/main.dd9abd64.chunk.css.map"
 }

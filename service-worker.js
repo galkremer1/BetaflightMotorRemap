@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/flicker-image-search/precache-manifest.4be0046e98699e00cefdb15ac0399e96.js"
+  "/betaflight-motor-remap/precache-manifest.d0d66880513b10b451a5154da2376e7e.js"
 );
 
 workbox.clientsClaim();
@@ -28,7 +28,7 @@ self.__precacheManifest = [].concat(self.__precacheManifest || []);
 workbox.precaching.suppressWarnings();
 workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
 
-workbox.routing.registerNavigationRoute("/flicker-image-search/index.html", {
+workbox.routing.registerNavigationRoute("/betaflight-motor-remap/index.html", {
   
   blacklist: [/^\/_/,/\/[^\/]+\.[^\/]+$/],
 });
