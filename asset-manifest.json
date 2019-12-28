@@ -1,13 +1,13 @@
 {
   "main.css": "/betaflight-motor-remap/static/css/main.dd9abd64.chunk.css",
-  "main.js": "/betaflight-motor-remap/static/js/main.e31f87f2.chunk.js",
-  "main.js.map": "/betaflight-motor-remap/static/js/main.e31f87f2.chunk.js.map",
-  "runtime~main.js": "/betaflight-motor-remap/static/js/runtime~main.20878563.js",
-  "runtime~main.js.map": "/betaflight-motor-remap/static/js/runtime~main.20878563.js.map",
-  "static/js/2.add27f6e.chunk.js": "/betaflight-motor-remap/static/js/2.add27f6e.chunk.js",
-  "static/js/2.add27f6e.chunk.js.map": "/betaflight-motor-remap/static/js/2.add27f6e.chunk.js.map",
+  "main.js": "/betaflight-motor-remap/static/js/main.66d8c751.chunk.js",
+  "main.js.map": "/betaflight-motor-remap/static/js/main.66d8c751.chunk.js.map",
+  "runtime~main.js": "/betaflight-motor-remap/static/js/runtime~main.660d7e0d.js",
+  "runtime~main.js.map": "/betaflight-motor-remap/static/js/runtime~main.660d7e0d.js.map",
+  "static/js/2.b948d7e7.chunk.js": "/betaflight-motor-remap/static/js/2.b948d7e7.chunk.js",
+  "static/js/2.b948d7e7.chunk.js.map": "/betaflight-motor-remap/static/js/2.b948d7e7.chunk.js.map",
   "index.html": "/betaflight-motor-remap/index.html",
-  "precache-manifest.ecab20bbcf5de9ceb35fd3f553ce6980.js": "/betaflight-motor-remap/precache-manifest.ecab20bbcf5de9ceb35fd3f553ce6980.js",
+  "precache-manifest.30eef6c08547ec1128c6d89a2eb74ed3.js": "/betaflight-motor-remap/precache-manifest.30eef6c08547ec1128c6d89a2eb74ed3.js",
   "service-worker.js": "/betaflight-motor-remap/service-worker.js",
   "static/css/main.dd9abd64.chunk.css.map": "/betaflight-motor-remap/static/css/main.dd9abd64.chunk.css.map"
 }
