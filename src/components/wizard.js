@@ -1,52 +1,66 @@
 import React, { Component, Fragment } from "react";
 import StepWizard from "react-step-wizard";
-import { TextField } from "@material-ui/core";
+import { TextField, Button } from "@material-ui/core";
 import escImage from "../images/65a.png";
-
-import Nav from "./nav";
-import Plugs from "./Plugs";
-
+import { CopyToClipboard } from "react-copy-to-clipboard";
 import transitions from "./transitions.css";
 const styles = {};
-/* eslint react/prop-types: 0 */
 
-/**
- * A basic demonstration of how to use the step wizard
- */
+const ESCLayout = {
+  0: ["MOTOR1", "MOTOR2", "MOTOR3", "MOTOR4"],
+  90: ["MOTOR2", "MOTOR4", "MOTOR1", "MOTOR3"],
+  180: ["MOTOR4", "MOTOR3", "MOTOR2", "MOTOR1"],
+  270: ["MOTOR3", "MOTOR1", "MOTOR4", "MOTOR2"]
+};
+
 export default class Wizard extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
       form: {},
+      ESCAngle: 0,
+      motorsList: {},
+      newMotorsResourceList: {},
       transitions: {
         enterRight: `${transitions.animated} ${transitions.enterRight}`,
         enterLeft: `${transitions.animated} ${transitions.enterLeft}`,
         exitRight: `${transitions.animated} ${transitions.exitRight}`,
         exitLeft: `${transitions.animated} ${transitions.exitLeft}`,
         intro: `${transitions.animated} ${transitions.intro}`
-      },
-      demo: true // uncomment to see more
+      }
+      // demo: true // uncomment to see more
     };
   }
 
-  updateForm = (key, value) => {
-    const { form } = this.state;
-
-    form[key] = value;
-    this.setState({ form });
-  };
-
   // Do something on step change
   onStepChange = stats => {
-    // console.log(stats);
+    console.log(stats);
+  };
+
+  rotateESC = () => {
+    const { ESCAngle } = this.state;
+    this.setState({ ESCAngle: (ESCAngle + 90) % 360 });
   };
 
   setInstance = SW => this.setState({ SW });
 
-  render() {
-    const { SW, demo } = this.state;
+  updateMotorsList = motorsList => {
+    this.setState({ motorsList });
+    console.log(motorsList);
+  };
 
+  calculateMotorsResourceList = () => {
+    const { motorsList, ESCAngle } = this.state;
+    const newMotorsResourceList = {};
+    ESCLayout[ESCAngle].forEach((motor, i) => {
+      newMotorsResourceList["MOTOR" + (i + 1)] = motorsList[motor];
+    });
+    this.setState({ newMotorsResourceList });
+  };
+
+  render() {
+    const { SW, demo, ESCAngle, newMotorsResourceList } = this.state;
     return (
       <div className="container" style={{ textAlign: "center" }}>
         <h3>Betaflight Motor Remap Helper</h3>
@@ -55,15 +69,21 @@ export default class Wizard extends Component {
             <div className={`col-12 col-sm-6 offset-sm-3`}>
               <StepWizard
                 onStepChange={this.onStepChange}
-                isHashEnabled
+                isHashEnabled={false}
                 transitions={this.state.transitions} // comment out this line to use default transitions
-                // nav={<Nav />}
                 instance={this.setInstance}
               >
-                <First hashKey={"getResources"} update={this.updateForm} />
-                <Second form={this.state.form} />
+                <First
+                  hashKey={"getResources"}
+                  updateMotorsList={this.updateMotorsList}
+                />
+                <Second
+                  rotateESC={this.rotateESC}
+                  ESCAngle={ESCAngle}
+                  calculateMotorsResourceList={this.calculateMotorsResourceList}
+                />
                 <Progress />
-                <Last hashKey={"TheEnd!"} />
+                <Last motorsList={newMotorsResourceList} />
               </StepWizard>
             </div>
           </div>
@@ -90,19 +110,11 @@ const InstanceDemo = ({ SW }) => (
 /** Steps */
 
 class First extends Component {
-  state = {
-    resourceListInput: "CLI Resource",
-    userMotorsValue: {}
-  };
-  update = e => {
-    this.props.update(e.target.name, e.target.value);
-  };
+  state = {};
 
-  handleChange = event => {
-    this.updateMotorValues(event.target.value);
-  };
-
-  updateMotorValues = resourceList => {
+  updateMotorValues = event => {
+    const { updateMotorsList } = this.props;
+    const resourceList = event.target.value;
     const resourceListArray = resourceList.match(/[^\r\n]+/g);
     let motorNum = 1;
     const motorsList = {};
@@ -114,7 +126,7 @@ class First extends Component {
           motorNum++;
         }
       });
-    console.log(motorsList);
+    updateMotorsList(motorsList);
   };
 
   render() {
@@ -122,37 +134,35 @@ class First extends Component {
       <div>
         <TextField
           fullWidth={true}
-          placeholder={"test"}
+          placeholder={"Enter CLI Dump Values"}
           multiline={true}
           rows={4}
           value={this.state.value}
-          onChange={this.handleChange}
+          onChange={this.updateMotorValues}
         />
+        <Stats step={1} {...this.props} />
       </div>
     );
   }
 }
 
 class Second extends Component {
-  state = {
-    ESCAngle: 360
-  };
-
-  rotateESC = () => {
-    const { ESCAngle } = this.state;
-    console.log(ESCAngle);
-    this.setState({ ESCAngle: (ESCAngle % 360) + 90 });
-  };
   render() {
-    const { ESCAngle } = this.state;
+    const { rotateESC, ESCAngle } = this.props;
 
     return (
       <div>
+        <h3>Click The ESC to rotate it</h3>
         <img
-          onClick={this.rotateESC}
-          style={{ width: 400, transform: `rotate(${ESCAngle}deg)` }}
+          onClick={rotateESC}
+          style={{
+            width: 400,
+            cursor: "pointer",
+            transform: `rotate(${ESCAngle}deg)`
+          }}
           src={escImage}
         />
+        <Stats step={2} {...this.props} />
       </div>
     );
   }
@@ -172,7 +182,7 @@ class Progress extends Component {
         // isActiveClass: styles.loaded,
         timeout: setTimeout(() => {
           this.props.nextStep();
-        }, 3000)
+        }, 1000)
       });
     } else if (!this.props.isActive && timeout) {
       clearTimeout(timeout);
@@ -186,7 +196,7 @@ class Progress extends Component {
   render() {
     return (
       <div className={styles["progress-wrapper"]}>
-        <p className="text-center">Automated Progress...</p>
+        <p className="text-center">Calculating...</p>
         <div className={`${styles.progress} ${this.state.isActiveClass}`}>
           <div className={`${styles["progress-bar"]} progress-bar-striped`} />
         </div>
@@ -196,19 +206,85 @@ class Progress extends Component {
 }
 
 class Last extends Component {
-  submit = () => {
-    alert("You did it! Yay!"); // eslint-disable-line
-  };
-
   render() {
+    const { motorsList } = this.props;
+    const CLICOMMAND = `RESOURCE MOTOR 1 ${motorsList["MOTOR1"]};
+                    RESOURCE MOTOR 2 ${motorsList["MOTOR2"]};
+                    RESOURCE MOTOR 3 ${motorsList["MOTOR3"]};
+                    RESOURCE MOTOR 4 ${motorsList["MOTOR4"]};save;`;
     return (
       <div>
         <div className={"text-center"}>
-          <h3>This is the last step in this example!</h3>
+          <h3>Please Paste This In The CLI:</h3>
           <hr />
-          <Plugs />
+          <code>
+            <div>RESOURCE MOTOR 1 {motorsList["MOTOR1"]}</div>
+            <div>RESOURCE MOTOR 2 {motorsList["MOTOR2"]}</div>
+            <div>RESOURCE MOTOR 3 {motorsList["MOTOR3"]}</div>
+            <div>RESOURCE MOTOR 4 {motorsList["MOTOR4"]}</div>
+          </code>
+          {/* <Plugs /> */}
         </div>
+
+        <Stats step={3} CLICOMMAND={CLICOMMAND} {...this.props} />
       </div>
     );
   }
 }
+
+const Stats = ({
+  currentStep,
+  firstStep,
+  goToStep,
+  lastStep,
+  nextStep,
+  previousStep,
+  totalSteps,
+  calculateMotorsResourceList,
+  CLICOMMAND,
+  step
+}) => (
+  <div>
+    <hr />
+    {step < totalSteps - 1 && step !== 2 && (
+      <button className="btn btn-primary btn-block" onClick={nextStep}>
+        Continue
+      </button>
+    )}
+    {step === 2 && (
+      <button
+        className="btn btn-primary btn-block"
+        onClick={() => {
+          calculateMotorsResourceList();
+          nextStep();
+        }}
+      >
+        Continue
+      </button>
+    )}
+
+    {step > 1 && step !== 3 && (
+      <button className="btn btn-danger btn-block" onClick={previousStep}>
+        Go Back
+      </button>
+    )}
+    {step == 3 && (
+      <>
+        <CopyToClipboard text={CLICOMMAND} onCopy={() => {}}>
+          <button className="btn btn-primary btn-block">
+            Copy to clipboard with button
+          </button>
+        </CopyToClipboard>
+        <button
+          className="btn btn-danger btn-block"
+          onClick={() => {
+            goToStep(2);
+          }}
+        >
+          Go Back
+        </button>
+      </>
+    )}
+    <hr />
+  </div>
+);
