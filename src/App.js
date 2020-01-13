@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import StepWizard from "react-step-wizard";
 import { First, Second, Last } from "./steps/Steps";
 import Progress from "./steps/Progress";
+import logo from "./images/kremerfpvlogo.png";
 
 const ESCLayout = {
   0: ["MOTOR1", "MOTOR2", "MOTOR3", "MOTOR4"],
@@ -47,6 +48,12 @@ export default class Application extends Component {
     const { ESCAngle, newMotorsResourceList, motorsList } = this.state;
     return (
       <div className="container" style={{ textAlign: "center" }}>
+        <img
+          alt="logo"
+          className="logo"
+          src={logo}
+          onClick={() => window.open("http://youtube.com/kremerFPV", "_blank")}
+        />
         <h3>Betaflight Motor Remap Helper</h3>
         <div className={"jumbotron"}>
           <div className="row">
