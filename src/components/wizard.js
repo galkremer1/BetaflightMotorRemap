@@ -1,9 +1,10 @@
 import React, { Component, Fragment } from "react";
 import StepWizard from "react-step-wizard";
-import { TextField, Button } from "@material-ui/core";
+import { TextField } from "@material-ui/core";
 import escImage from "../images/65a.png";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import transitions from "./transitions.css";
+import Plugs from "./Plugs";
 const styles = {};
 
 const ESCLayout = {
@@ -20,7 +21,7 @@ export default class Wizard extends Component {
     this.state = {
       form: {},
       ESCAngle: 0,
-      motorsList: {},
+      motorsList: "",
       newMotorsResourceList: {},
       transitions: {
         enterRight: `${transitions.animated} ${transitions.enterRight}`,
@@ -60,7 +61,13 @@ export default class Wizard extends Component {
   };
 
   render() {
-    const { SW, demo, ESCAngle, newMotorsResourceList } = this.state;
+    const {
+      SW,
+      demo,
+      ESCAngle,
+      newMotorsResourceList,
+      motorsList
+    } = this.state;
     return (
       <div className="container" style={{ textAlign: "center" }}>
         <h3>Betaflight Motor Remap Helper</h3>
@@ -75,6 +82,7 @@ export default class Wizard extends Component {
               >
                 <First
                   hashKey={"getResources"}
+                  motorsList={motorsList}
                   updateMotorsList={this.updateMotorsList}
                 />
                 <Second
@@ -126,7 +134,11 @@ class First extends Component {
           motorNum++;
         }
       });
-    updateMotorsList(motorsList);
+    if (Object.keys(motorsList).length >= 4) {
+      updateMotorsList(motorsList);
+    } else {
+      updateMotorsList("");
+    }
   };
 
   render() {
@@ -152,7 +164,8 @@ class Second extends Component {
 
     return (
       <div>
-        <h3>Click The ESC to rotate it</h3>
+        <h4>Choose your ESC orientation</h4>
+        <h4>Click the ESC to rotate it</h4>
         <img
           onClick={rotateESC}
           style={{
@@ -222,8 +235,9 @@ class Last extends Component {
             <div>RESOURCE MOTOR 2 {motorsList["MOTOR2"]}</div>
             <div>RESOURCE MOTOR 3 {motorsList["MOTOR3"]}</div>
             <div>RESOURCE MOTOR 4 {motorsList["MOTOR4"]}</div>
+            <div>save</div>
           </code>
-          {/* <Plugs /> */}
+          <Plugs />
         </div>
 
         <Stats step={3} CLICOMMAND={CLICOMMAND} {...this.props} />
@@ -242,15 +256,21 @@ const Stats = ({
   totalSteps,
   calculateMotorsResourceList,
   CLICOMMAND,
+  motorsList,
   step
 }) => (
   <div>
     <hr />
-    {step < totalSteps - 1 && step !== 2 && (
-      <button className="btn btn-primary btn-block" onClick={nextStep}>
+    {step === 1 && (
+      <button
+        // disabled={!motorsList}
+        className="btn btn-primary btn-block"
+        onClick={nextStep}
+      >
         Continue
       </button>
     )}
+
     {step === 2 && (
       <button
         className="btn btn-primary btn-block"
@@ -272,7 +292,7 @@ const Stats = ({
       <>
         <CopyToClipboard text={CLICOMMAND} onCopy={() => {}}>
           <button className="btn btn-primary btn-block">
-            Copy to clipboard with button
+            Copy values to clipboard
           </button>
         </CopyToClipboard>
         <button
