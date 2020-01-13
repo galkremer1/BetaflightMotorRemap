@@ -1,9 +1,7 @@
 import React, { Component } from "react";
-import { withStyles } from "@material-ui/core/styles";
-import { styles } from "./style/style";
-import { TextField } from "@material-ui/core";
-import escImage from "./images/65a.png";
-import "./style/loading.css";
+import StepWizard from "react-step-wizard";
+import { First, Second, Last } from "./steps/Steps";
+import Progress from "./steps/Progress";
 
 const ESCLayout = {
   0: ["MOTOR1", "MOTOR2", "MOTOR3", "MOTOR4"],
@@ -12,64 +10,69 @@ const ESCLayout = {
   270: ["MOTOR3", "MOTOR1", "MOTOR4", "MOTOR2"]
 };
 
-class App extends Component {
+export default class Application extends Component {
   constructor(props) {
     super(props);
+
     this.state = {
-      resourceListInput: "CLI Resource",
-      userMotorsValue: {},
-      ESCAngle: 360
+      form: {},
+      ESCAngle: 0,
+      motorsList: "",
+      newMotorsResourceList: {}
     };
   }
 
-  componentDidMount() {}
+  rotateESC = () => {
+    const { ESCAngle } = this.state;
+    this.setState({ ESCAngle: (ESCAngle + 90) % 360 });
+  };
 
-  updateMotorValues = resourceList => {
-    const resourceListArray = resourceList.match(/[^\r\n]+/g);
-    let motorNum = 1;
-    const motorsList = {};
-    resourceListArray &&
-      resourceListArray.forEach(line => {
-        const indexOfMatchedString = line.indexOf("MOTOR " + motorNum);
-        if (indexOfMatchedString > -1) {
-          motorsList["MOTOR" + motorNum] = line.slice(indexOfMatchedString + 8);
-          motorNum++;
-        }
-      });
+  setInstance = SW => this.setState({ SW });
+
+  updateMotorsList = motorsList => {
+    this.setState({ motorsList });
     console.log(motorsList);
   };
 
-  handleChange = event => {
-    this.setState({ resourceListInput: event.target.value });
-    this.updateMotorValues(event.target.value);
-  };
-
-  rotateESC = () => {
-    const { ESCAngle } = this.state;
-    console.log(ESCAngle);
-    this.setState({ ESCAngle: (ESCAngle % 360) + 90 });
+  calculateMotorsResourceList = () => {
+    const { motorsList, ESCAngle } = this.state;
+    const newMotorsResourceList = {};
+    ESCLayout[ESCAngle].forEach((motor, i) => {
+      newMotorsResourceList["MOTOR" + (i + 1)] = motorsList[motor];
+    });
+    this.setState({ newMotorsResourceList });
   };
 
   render() {
-    const { ESCAngle } = this.state;
+    const { ESCAngle, newMotorsResourceList, motorsList } = this.state;
     return (
-      <>
-        <TextField
-          fullWidth={true}
-          placeholder={"test"}
-          multiline={true}
-          rows={4}
-          value={this.state.value}
-          onChange={this.handleChange}
-        />
-        <img
-          onClick={this.rotateESC}
-          style={{ width: 200, transform: `rotate(${ESCAngle}deg)` }}
-          src={escImage}
-        />
-      </>
+      <div className="container" style={{ textAlign: "center" }}>
+        <h3>Betaflight Motor Remap Helper</h3>
+        <div className={"jumbotron"}>
+          <div className="row">
+            <div className={`col-12 col-sm-6 offset-sm-3`}>
+              <StepWizard
+                onStepChange={this.onStepChange}
+                isHashEnabled={false}
+                instance={this.setInstance}
+              >
+                <First
+                  hashKey={"getResources"}
+                  motorsList={motorsList}
+                  updateMotorsList={this.updateMotorsList}
+                />
+                <Second
+                  rotateESC={this.rotateESC}
+                  ESCAngle={ESCAngle}
+                  calculateMotorsResourceList={this.calculateMotorsResourceList}
+                />
+                <Progress />
+                <Last motorsList={newMotorsResourceList} />
+              </StepWizard>
+            </div>
+          </div>
+        </div>
+      </div>
     );
   }
 }
-
-export default withStyles(styles)(App);
