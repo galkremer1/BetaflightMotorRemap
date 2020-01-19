@@ -8,9 +8,16 @@ code {
   cursor: pointer;
 }
 
+.modalIcons {
+  width: 40px;
+}
+
 .ESC-Image {
   width: 300px;
   cursor: pointer;
+}
+.ReactModal__Overlay--after-open {
+  z-index: 2;
 }
 
 .disable-select-text {

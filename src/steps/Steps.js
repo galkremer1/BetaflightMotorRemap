@@ -10,6 +10,7 @@ const StepButtons = ({
   calculateMotorsResourceList,
   CLICOMMAND,
   motorsList,
+  toggleModal,
   step
 }) => (
   <div>
@@ -43,7 +44,12 @@ const StepButtons = ({
     )}
     {step === 3 && (
       <>
-        <CopyToClipboard text={CLICOMMAND} onCopy={() => {}}>
+        <CopyToClipboard
+          text={CLICOMMAND}
+          onCopy={() => {
+            toggleModal();
+          }}
+        >
           <button className="btn btn-primary btn-block">
             Copy values to clipboard
           </button>
@@ -145,7 +151,6 @@ export class Last extends Component {
             <div>RESOURCE MOTOR 4 {motorsList["MOTOR4"]}</div>
             <div>save</div>
           </code>
-          {/* <Plugs /> */}
         </div>
 
         <StepButtons step={3} CLICOMMAND={CLICOMMAND} {...this.props} />
