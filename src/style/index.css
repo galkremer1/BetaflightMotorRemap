@@ -1,0 +1,36 @@
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+.logo {
+  width: 60px;
+  cursor: pointer;
+}
+
+.modalIcons {
+  width: 40px;
+}
+
+.ESC-Image {
+  width: 300px;
+  cursor: pointer;
+}
+.ReactModal__Overlay--after-open {
+  z-index: 2;
+}
+
+.disable-select-text {
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Old versions of Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none;
+}
+
+@media only screen and (max-width: 800px) {
+  .ESC-Image {
+    width: 200px;
+  }
+}
