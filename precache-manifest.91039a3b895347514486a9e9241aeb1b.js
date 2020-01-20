@@ -44,7 +44,7 @@ self.__precacheManifest = [
     "url": "/BetaflightMotorRemap/static/css/2.50c43720.chunk.css"
   },
   {
-    "revision": "1e230bffea91102f1b92dfe1c0a43b58",
+    "revision": "efdb5669667aef9411f06d880d1cabf3",
     "url": "/BetaflightMotorRemap/index.html"
   }
 ];
