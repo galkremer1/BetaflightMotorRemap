@@ -10,6 +10,7 @@ code {
 
 .modalIcons {
   width: 40px;
+  max-height: 35px;
 }
 
 .ESC-Image {

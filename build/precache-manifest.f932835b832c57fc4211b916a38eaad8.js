@@ -4,7 +4,7 @@ self.__precacheManifest = [
     "url": "/static/media/65a.d92276e3.png"
   },
   {
-    "revision": "21e267f9349a41f26fb6",
+    "revision": "80196276f005af74840b",
     "url": "/static/css/main.6d5b5392.chunk.css"
   },
   {
@@ -24,8 +24,8 @@ self.__precacheManifest = [
     "url": "/static/media/kremerfpvlogo.b9cf8ce5.png"
   },
   {
-    "revision": "21e267f9349a41f26fb6",
-    "url": "/static/js/main.85945890.chunk.js"
+    "revision": "80196276f005af74840b",
+    "url": "/static/js/main.962537ef.chunk.js"
   },
   {
     "revision": "c73df4b745d958f66b196029a698a65a",
@@ -44,7 +44,7 @@ self.__precacheManifest = [
     "url": "/static/css/2.50c43720.chunk.css"
   },
   {
-    "revision": "e533e159afa639cf855f643988dbb212",
+    "revision": "e9c76621160595e064b5308d3b9c72a2",
     "url": "/index.html"
   }
 ];

@@ -6,12 +6,18 @@ import YouYube from "../images/youtube.svg";
 import Paypal from "../images/PayPal.png";
 import Beer from "../images/beer.png";
 import LinkImg from "../images/link.png";
+import HeliNation from "../images/helination.png";
+import RotorRiot from "../images/rotorriot.png";
+import BanggoodLogo from "../images/banggood.png";
+import GearbestLogo from "../images/gearbest.png";
+import RDQ from "../images/rdq.png";
+import HobbyCool from "../images/hobbycool.png";
 
 Modal.setAppElement("#root");
 
 const customStyles = {
   content: {
-    top: "30%",
+    top: "50%",
     left: "50%",
     right: "auto",
     bottom: "auto",
@@ -24,7 +30,6 @@ const customStyles = {
 export default class SupportModal extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
       showAffiliatedLinks: false
     };
@@ -33,7 +38,7 @@ export default class SupportModal extends Component {
     const { isModalOpen, toggleModal } = this.props;
     const { showAffiliatedLinks } = this.state;
     return (
-      <Modal isOpen={!isModalOpen} style={customStyles}>
+      <Modal isOpen={isModalOpen} style={customStyles}>
         {!showAffiliatedLinks && (
           <div>
             <div>Paste the values in the CLI.</div>
@@ -98,7 +103,7 @@ export default class SupportModal extends Component {
                 }
               >
                 <ListItemIcon>
-                  <img alt="logo" className="modalIcons" src={logo} />
+                  <img alt="logo" className="modalIcons" src={BanggoodLogo} />
                 </ListItemIcon>
                 <ListItemText primary="Banggood" />
               </ListItem>
@@ -107,21 +112,11 @@ export default class SupportModal extends Component {
                 onClick={() => window.open("http://bit.ly/hobbycool", "_blank")}
               >
                 <ListItemIcon>
-                  <img alt="logo" className="modalIcons" src={logo} />
+                  <img alt="logo" className="modalIcons" src={HobbyCool} />
                 </ListItemIcon>
                 <ListItemText primary="HobbyCool" />
               </ListItem>
-              <ListItem
-                button
-                onClick={() =>
-                  window.open("http://bit.ly/GB-Affiliate", "_blank")
-                }
-              >
-                <ListItemIcon>
-                  <img alt="logo" className="modalIcons" src={logo} />
-                </ListItemIcon>
-                <ListItemText primary="Gearbest" />
-              </ListItem>
+
               <ListItem
                 button
                 onClick={() =>
@@ -129,7 +124,7 @@ export default class SupportModal extends Component {
                 }
               >
                 <ListItemIcon>
-                  <img alt="logo" className="modalIcons" src={logo} />
+                  <img alt="logo" className="modalIcons" src={HeliNation} />
                 </ListItemIcon>
                 <ListItemText primary="Heli-Nation" />
               </ListItem>
@@ -140,7 +135,7 @@ export default class SupportModal extends Component {
                 }
               >
                 <ListItemIcon>
-                  <img alt="logo" className="modalIcons" src={logo} />
+                  <img alt="logo" className="modalIcons" src={RDQ} />
                 </ListItemIcon>
                 <ListItemText primary="RDQ" />
               </ListItem>
@@ -151,15 +146,32 @@ export default class SupportModal extends Component {
                 }
               >
                 <ListItemIcon>
-                  <img alt="logo" className="modalIcons" src={logo} />
+                  <img alt="logo" className="modalIcons" src={RotorRiot} />
                 </ListItemIcon>
                 <ListItemText primary="RotorRiot" />
+              </ListItem>
+              <ListItem
+                button
+                onClick={() =>
+                  window.open("http://bit.ly/GB-Affiliate", "_blank")
+                }
+              >
+                <ListItemIcon>
+                  <img alt="logo" className="modalIcons" src={GearbestLogo} />
+                </ListItemIcon>
+                <ListItemText primary="Gearbest" />
               </ListItem>
             </List>
           </div>
         )}
 
-        <button className="btn btn-primary btn-block" onClick={toggleModal}>
+        <button
+          className="btn btn-primary btn-block"
+          onClick={() => {
+            this.setState({ showAffiliatedLinks: false });
+            toggleModal();
+          }}
+        >
           Close
         </button>
       </Modal>
