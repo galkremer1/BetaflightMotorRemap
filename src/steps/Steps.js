@@ -142,7 +142,7 @@ export class Last extends Component {
     const CLICOMMAND = `RESOURCE MOTOR 1 ${motorsList["MOTOR1"]};
                     RESOURCE MOTOR 2 ${motorsList["MOTOR2"]};
                     RESOURCE MOTOR 3 ${motorsList["MOTOR3"]};
-                    RESOURCE MOTOR 4 ${motorsList["MOTOR4"]};save;`;
+                    RESOURCE MOTOR 4 ${motorsList["MOTOR4"]};`;
     return (
       <div>
         <div className={"text-center"}>
