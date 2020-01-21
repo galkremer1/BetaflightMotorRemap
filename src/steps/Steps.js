@@ -2,6 +2,7 @@ import { TextField } from "@material-ui/core";
 import React, { Component } from "react";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import escImage from "../images/65a.png";
+import flippedEscImage from "../images/65aFlipped.png";
 
 const StepButtons = ({
   goToStep,
@@ -111,7 +112,7 @@ export class First extends Component {
 
 export class Second extends Component {
   render() {
-    const { rotateESC, ESCAngle } = this.props;
+    const { rotateESC, ESCAngle, flipEsc, isESCFlipped } = this.props;
 
     return (
       <div>
@@ -124,8 +125,11 @@ export class Second extends Component {
           style={{
             transform: `rotate(${ESCAngle}deg)`
           }}
-          src={escImage}
+          src={isESCFlipped ? flippedEscImage : escImage}
         />
+        <button className="btn btn-primary flipESC" onClick={flipEsc}>
+          Flip ESC
+        </button>
         <StepButtons step={2} {...this.props} />
       </div>
     );

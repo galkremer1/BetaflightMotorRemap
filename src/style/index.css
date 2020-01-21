@@ -17,6 +17,13 @@ code {
   width: 300px;
   cursor: pointer;
 }
+
+.flipESC {
+  display: block !important;
+  margin: auto;
+  margin-top: 15px;
+}
+
 .ReactModal__Overlay--after-open {
   z-index: 2;
 }

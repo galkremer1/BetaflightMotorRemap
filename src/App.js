@@ -11,6 +11,12 @@ const ESCLayout = {
   180: ["MOTOR4", "MOTOR3", "MOTOR2", "MOTOR1"],
   270: ["MOTOR3", "MOTOR1", "MOTOR4", "MOTOR2"]
 };
+const flippedESCLayout = {
+  0: ["MOTOR3", "MOTOR4", "MOTOR1", "MOTOR2"],
+  90: ["MOTOR4", "MOTOR2", "MOTOR3", "MOTOR1"],
+  180: ["MOTOR2", "MOTOR1", "MOTOR4", "MOTOR3"],
+  270: ["MOTOR1", "MOTOR3", "MOTOR3", "MOTOR4"]
+};
 
 export default class Application extends Component {
   constructor(props) {
@@ -19,6 +25,7 @@ export default class Application extends Component {
     this.state = {
       form: {},
       ESCAngle: 0,
+      isESCFlipped: false,
       motorsList: "",
       newMotorsResourceList: {},
       isModalOpen: false
@@ -28,6 +35,11 @@ export default class Application extends Component {
   rotateESC = () => {
     const { ESCAngle } = this.state;
     this.setState({ ESCAngle: (ESCAngle + 90) % 360 });
+  };
+
+  flipEsc = () => {
+    const { isESCFlipped } = this.state;
+    this.setState({ isESCFlipped: !isESCFlipped });
   };
 
   toggleModal = () => {
@@ -43,9 +55,13 @@ export default class Application extends Component {
   };
 
   calculateMotorsResourceList = () => {
-    const { motorsList, ESCAngle } = this.state;
+    const { motorsList, ESCAngle, isESCFlipped } = this.state;
+    let escLayout = ESCLayout;
+    if (isESCFlipped) {
+      escLayout = flippedESCLayout;
+    }
     const newMotorsResourceList = {};
-    ESCLayout[ESCAngle].forEach((motor, i) => {
+    escLayout[ESCAngle].forEach((motor, i) => {
       newMotorsResourceList["MOTOR" + (i + 1)] = motorsList[motor];
     });
     this.setState({ newMotorsResourceList });
@@ -54,6 +70,7 @@ export default class Application extends Component {
   render() {
     const {
       ESCAngle,
+      isESCFlipped,
       newMotorsResourceList,
       motorsList,
       isModalOpen
@@ -85,6 +102,8 @@ export default class Application extends Component {
                   />
                   <Second
                     rotateESC={this.rotateESC}
+                    flipEsc={this.flipEsc}
+                    isESCFlipped={isESCFlipped}
                     ESCAngle={ESCAngle}
                     calculateMotorsResourceList={
                       this.calculateMotorsResourceList
