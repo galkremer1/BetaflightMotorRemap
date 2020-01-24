@@ -87,6 +87,9 @@ export default class Application extends Component {
             }
           />
           <h3>Betaflight Motor Remap Helper</h3>
+          <a href="https://youtu.be/ziQSpe7gIvM" target="_blank">
+            <h4>Need Help?</h4>
+          </a>
           <div className={"jumbotron"}>
             <div className="row">
               <div className={`col-12 col-sm-6 offset-sm-3`}>
