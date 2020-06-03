@@ -9,13 +9,13 @@ const ESCLayout = {
   0: ["MOTOR1", "MOTOR2", "MOTOR3", "MOTOR4"],
   90: ["MOTOR2", "MOTOR4", "MOTOR1", "MOTOR3"],
   180: ["MOTOR4", "MOTOR3", "MOTOR2", "MOTOR1"],
-  270: ["MOTOR3", "MOTOR1", "MOTOR4", "MOTOR2"]
+  270: ["MOTOR3", "MOTOR1", "MOTOR4", "MOTOR2"],
 };
 const flippedESCLayout = {
   0: ["MOTOR3", "MOTOR4", "MOTOR1", "MOTOR2"],
   90: ["MOTOR4", "MOTOR2", "MOTOR3", "MOTOR1"],
   180: ["MOTOR2", "MOTOR1", "MOTOR4", "MOTOR3"],
-  270: ["MOTOR1", "MOTOR3", "MOTOR3", "MOTOR4"]
+  270: ["MOTOR1", "MOTOR3", "MOTOR2", "MOTOR4"],
 };
 
 export default class Application extends Component {
@@ -28,7 +28,7 @@ export default class Application extends Component {
       isESCFlipped: false,
       motorsList: "",
       newMotorsResourceList: {},
-      isModalOpen: false
+      isModalOpen: false,
     };
   }
 
@@ -47,9 +47,9 @@ export default class Application extends Component {
     this.setState({ isModalOpen: !isModalOpen });
   };
 
-  setInstance = SW => this.setState({ SW });
+  setInstance = (SW) => this.setState({ SW });
 
-  updateMotorsList = motorsList => {
+  updateMotorsList = (motorsList) => {
     this.setState({ motorsList });
     console.log(motorsList);
   };
@@ -73,7 +73,7 @@ export default class Application extends Component {
       isESCFlipped,
       newMotorsResourceList,
       motorsList,
-      isModalOpen
+      isModalOpen,
     } = this.state;
     return (
       <>
