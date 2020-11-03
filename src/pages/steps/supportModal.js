@@ -1,17 +1,17 @@
 import React, { Component } from "react";
 import Modal from "react-modal";
 import { List, ListItemText, ListItemIcon, ListItem } from "@material-ui/core";
-import logo from "../images/kremerfpvlogo.png";
-import YouYube from "../images/youtube.svg";
-import Paypal from "../images/PayPal.png";
-import Beer from "../images/beer.png";
-import LinkImg from "../images/link.png";
-import HeliNation from "../images/helination.png";
-import RotorRiot from "../images/rotorriot.png";
-import BanggoodLogo from "../images/banggood.png";
-import GearbestLogo from "../images/gearbest.png";
-import RDQ from "../images/rdq.png";
-import HobbyCool from "../images/hobbycool.png";
+import logo from "../../images/kremerfpvlogo.png";
+import YouYube from "../../images/youtube.svg";
+import Paypal from "../../images/PayPal.png";
+import Beer from "../../images/beer.png";
+import LinkImg from "../../images/link.png";
+import HeliNation from "../../images/helination.png";
+import RotorRiot from "../../images/rotorriot.png";
+import BanggoodLogo from "../../images/banggood.png";
+import GearbestLogo from "../../images/gearbest.png";
+import RDQ from "../../images/rdq.png";
+import HobbyCool from "../../images/hobbycool.png";
 
 Modal.setAppElement("#root");
 
@@ -23,15 +23,15 @@ const customStyles = {
     bottom: "auto",
     marginRight: "-50%",
     transform: "translate(-50%, -50%)",
-    textAlign: "center"
-  }
+    textAlign: "center",
+  },
 };
 
 export default class SupportModal extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      showAffiliatedLinks: false
+      showAffiliatedLinks: false,
     };
   }
   render() {

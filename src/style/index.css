@@ -8,6 +8,10 @@ code {
   cursor: pointer;
 }
 
+.main-menu-buttons-container {
+  margin: auto;
+}
+
 .modalIcons {
   width: 40px;
   max-height: 35px;

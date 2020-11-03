@@ -1,8 +1,8 @@
 import { TextField } from "@material-ui/core";
 import React, { Component } from "react";
 import { CopyToClipboard } from "react-copy-to-clipboard";
-import escImage from "../images/65a.png";
-import flippedEscImage from "../images/65aFlipped.png";
+import escImage from "../../images/65a.png";
+import flippedEscImage from "../../images/65aFlipped.png";
 
 const StepButtons = ({
   goToStep,
@@ -12,7 +12,7 @@ const StepButtons = ({
   CLICOMMAND,
   motorsList,
   toggleModal,
-  step
+  step,
 }) => (
   <div>
     <hr />
@@ -72,14 +72,14 @@ const StepButtons = ({
 export class First extends Component {
   state = {};
 
-  updateMotorValues = event => {
+  updateMotorValues = (event) => {
     const { updateMotorsList } = this.props;
     const resourceList = event.target.value;
     const resourceListArray = resourceList.match(/[^\r\n]+/g);
     let motorNum = 1;
     const motorsList = {};
     resourceListArray &&
-      resourceListArray.forEach(line => {
+      resourceListArray.forEach((line) => {
         const indexOfMatchedString = line.indexOf("MOTOR " + motorNum);
         if (indexOfMatchedString > -1) {
           motorsList["MOTOR" + motorNum] = line.slice(indexOfMatchedString + 8);
@@ -123,7 +123,7 @@ export class Second extends Component {
           onClick={rotateESC}
           className="ESC-Image"
           style={{
-            transform: `rotate(${ESCAngle}deg)`
+            transform: `rotate(${ESCAngle}deg)`,
           }}
           src={isESCFlipped ? flippedEscImage : escImage}
         />
