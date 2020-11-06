@@ -1064,6 +1064,12 @@
   version "11.10.5"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-11.10.5.tgz#fbaca34086bdc118011e1f05c47688d432f2d571"
 
+"@types/papaparse@^5.0.3":
+  version "5.2.4"
+  resolved "https://registry.yarnpkg.com/@types/papaparse/-/papaparse-5.2.4.tgz#6aa662b08df84fd1dc34db37860005e9127457f3"
+  dependencies:
+    "@types/node" "*"
+
 "@types/prop-types@*":
   version "15.7.3"
   resolved "https://registry.yarnpkg.com/@types/prop-types/-/prop-types-15.7.3.tgz#2ab0d5da2e5815f94b0b9d4b95d1e5f243ab2ca7"
@@ -6351,6 +6357,10 @@ pako@~1.0.5:
   version "1.0.10"
   resolved "https://registry.yarnpkg.com/pako/-/pako-1.0.10.tgz#4328badb5086a426aa90f541977d4955da5c9732"
 
+papaparse@^5.1.1:
+  version "5.3.0"
+  resolved "https://registry.yarnpkg.com/papaparse/-/papaparse-5.3.0.tgz#ab1702feb96e79ab4309652f36db9536563ad05a"
+
 parallel-transform@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/parallel-transform/-/parallel-transform-1.1.0.tgz#d410f065b05da23081fcd10f28854c29bda33b06"
@@ -7416,6 +7426,13 @@ react-copy-to-clipboard@^5.0.2:
   dependencies:
     copy-to-clipboard "^3"
     prop-types "^15.5.8"
+
+react-csv-reader@^3.1.1:
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/react-csv-reader/-/react-csv-reader-3.1.1.tgz#a0fe4c30152b9fa149e34abcdcdd98866dc28490"
+  dependencies:
+    "@types/papaparse" "^5.0.3"
+    papaparse "^5.1.1"
 
 react-dev-utils@^8.0.0:
   version "8.0.0"
