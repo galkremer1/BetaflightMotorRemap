@@ -63,3 +63,11 @@ tbody tr {
     width: 200px;
   }
 }
+
+.ui.checkbox {
+  width: 10px;
+}
+.ui.input {
+  width: 90px;
+  margin: 10px;
+}

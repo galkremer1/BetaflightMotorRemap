@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import StepWizard from "react-step-wizard";
 import { First, Second, Last } from "./steps/Steps";
-import SupportModal from "./steps/supportModal";
+import SupportModal from "./supportModal";
 import Progress from "./steps/Progress";
 
 const ESCLayout = {
@@ -114,6 +114,7 @@ export default class MotorsRemapTool extends Component {
           </div>
         </div>
         <SupportModal
+          instructions={"Paste the values in the CLI."}
           isModalOpen={isModalOpen}
           toggleModal={this.toggleModal}
         />

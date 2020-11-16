@@ -1,22 +1,10 @@
 import React, { Component } from "react";
 import CSVReader from "react-csv-reader";
 import moment from "moment";
-import "semantic-ui-css/semantic.min.css";
-import {
-  Segment,
-  Grid,
-  Label,
-  Input,
-  Icon,
-  Menu,
-  Table,
-  Checkbox,
-} from "semantic-ui-react";
-import styled from "styled-components";
+import SupportModal from "./supportModal";
 
-const MaterialInput = styled(Input)`
-  border: unset;
-`;
+import "semantic-ui-css/semantic.min.css";
+import { Segment, Grid, Button, Input, Checkbox } from "semantic-ui-react";
 
 export default class OpenTxLogHelper extends Component {
   constructor(props) {
@@ -26,6 +14,9 @@ export default class OpenTxLogHelper extends Component {
       value: 0,
       adjustedCsvData: {},
       mappedHeaders: [],
+      mappedValues: {},
+      timeShift: null,
+      isModalOpen: false,
     };
   }
 
@@ -74,9 +65,6 @@ export default class OpenTxLogHelper extends Component {
             initialTime
           ),
         };
-        Object.keys(mappedHeaders).forEach((value) => {
-          obj[value] = element[mappedHeaders[value]];
-        });
         arr.push(obj);
       }
     });
@@ -91,30 +79,34 @@ export default class OpenTxLogHelper extends Component {
   }
 
   createSrtRows() {
-    const { adjustedCsvData, mappedHeaders } = this.state;
+    const { adjustedCsvData, mappedValues } = this.state;
     let csvArray = adjustedCsvData;
     const newline = "\n";
     let srtSequence = "";
 
-    for (let i = 0; i < csvArray.length - 1; i++) {
+    for (let i = 0; i < csvArray.length - 2; i++) {
       const srt = {};
       srt.nr = i + 1 + newline;
       srt.timeCode =
         csvArray[i].timeCode + " --> " + csvArray[i + 1].timeCode + newline;
       let captions = "";
       Object.keys(csvArray[i]).map((key) => {
-        captions += `${key} : ${csvArray[i][key]} `;
+        if (key !== "timeCode") {
+          captions += `${mappedValues[key] ? mappedValues[key] : key} : ${
+            csvArray[i][key]
+          } `;
+        }
       });
       srt.caption = captions + newline;
       srt.newline = newline;
       srtSequence += srt.nr + srt.timeCode + srt.caption + srt.newline;
     }
-    this.exportToCsv(srtSequence, "test.srt");
-    return srtSequence;
+    this.exportToCsv(srtSequence, "subtitle.srt");
+    this.toggleModal();
   }
 
   exportToCsv(csvFile, filename) {
-    var blob = new Blob([csvFile], { type: "text/csv;charset=utf-8;" });
+    var blob = new Blob([csvFile], { type: "text/srt;charset=utf-8;" });
     if (navigator.msSaveBlob) {
       // IE 10+
       navigator.msSaveBlob(blob, filename);
@@ -137,17 +129,30 @@ export default class OpenTxLogHelper extends Component {
     csvFileData.forEach((element, i) => {
       if (i > 0 && i < csvFileData.length - 1) {
         if (isChecked) {
-          adjustedCsvData[i][target] = element[mappedHeaders[target]];
+          adjustedCsvData[i - 1][target] = element[mappedHeaders[target]];
         } else {
-          delete adjustedCsvData[i][target];
+          delete adjustedCsvData[i - 1][target];
         }
       }
     });
     this.setState({ adjustedCsvData });
   }
 
+  toggleModal = () => {
+    const { isModalOpen } = this.state;
+    this.setState({ isModalOpen: !isModalOpen });
+  };
+
+  handleInputOnChange(text, e) {
+    const { mappedValues } = this.state;
+    mappedValues[text] = e.target.value;
+    this.setState({
+      ...mappedValues,
+    });
+  }
+
   render() {
-    const { csvFileData, mappedHeaders } = this.state;
+    const { csvFileData, mappedHeaders, isModalOpen } = this.state;
 
     return (
       <Grid padded style={{ width: "100%" }}>
@@ -160,24 +165,42 @@ export default class OpenTxLogHelper extends Component {
               {" "}
               <Segment>
                 <div>Choose Elements</div>
-                {Object.keys(mappedHeaders).map((value) => {
-                  return (
-                    <Checkbox
-                      key={value}
-                      onChange={(e, { checked }) => {
-                        this.handleParamChange(value, checked);
-                      }}
-                      name={value}
-                      label={value}
-                      defaultChecked
-                    />
-                  );
-                })}
+                <div style={{ display: "flex", flexWrap: "wrap" }}>
+                  {Object.keys(mappedHeaders).map((value, i) => {
+                    return (
+                      <div key={value}>
+                        <Checkbox
+                          onChange={(e, { checked }) => {
+                            this.handleParamChange(value, checked);
+                          }}
+                          name={value}
+                        />
+                        <Input
+                          onChange={(e) => this.handleInputOnChange(value, e)}
+                          placeholder={value}
+                        />
+                      </div>
+                    );
+                  })}
+                </div>
               </Segment>
-              <button onClick={this.createSrtRows.bind(this)}>SRT</button>
+              <Input
+                // onChange={(e) => this.handleInputOnChange(value, e)}
+                placeholder={"Milliseconds"}
+                type="number"
+                label="Time Shift"
+              />
+              <br />
+              <Button onClick={this.createSrtRows.bind(this)}>
+                Export To SRT
+              </Button>
             </>
           )}
         </Grid.Column>
+        <SupportModal
+          isModalOpen={isModalOpen}
+          toggleModal={this.toggleModal}
+        />
       </Grid>
     );
   }

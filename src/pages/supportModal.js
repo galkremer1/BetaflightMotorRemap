@@ -1,17 +1,17 @@
 import React, { Component } from "react";
 import Modal from "react-modal";
 import { List, ListItemText, ListItemIcon, ListItem } from "@material-ui/core";
-import logo from "../../images/kremerfpvlogo.png";
-import YouYube from "../../images/youtube.svg";
-import Paypal from "../../images/PayPal.png";
-import Beer from "../../images/beer.png";
-import LinkImg from "../../images/link.png";
-import HeliNation from "../../images/helination.png";
-import RotorRiot from "../../images/rotorriot.png";
-import BanggoodLogo from "../../images/banggood.png";
-import GearbestLogo from "../../images/gearbest.png";
-import RDQ from "../../images/rdq.png";
-import HobbyCool from "../../images/hobbycool.png";
+import logo from "../images/kremerfpvlogo.png";
+import YouYube from "../images/youtube.svg";
+import Paypal from "../images/PayPal.png";
+import Beer from "../images/beer.png";
+import LinkImg from "../images/link.png";
+import HeliNation from "../images/helination.png";
+import RotorRiot from "../images/rotorriot.png";
+import BanggoodLogo from "../images/banggood.png";
+import GearbestLogo from "../images/gearbest.png";
+import RDQ from "../images/rdq.png";
+import HobbyCool from "../images/hobbycool.png";
 
 Modal.setAppElement("#root");
 
@@ -35,13 +35,13 @@ export default class SupportModal extends Component {
     };
   }
   render() {
-    const { isModalOpen, toggleModal } = this.props;
+    const { isModalOpen, toggleModal, instructions } = this.props;
     const { showAffiliatedLinks } = this.state;
     return (
       <Modal isOpen={isModalOpen} style={customStyles}>
         {!showAffiliatedLinks && (
           <div>
-            <div>Paste the values in the CLI.</div>
+            <div>{instructions}</div>
             <div> Happy Flying! </div>
             <div>
               If you find this tool useful, please consider supporting me:
