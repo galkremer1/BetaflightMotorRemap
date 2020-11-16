@@ -12,6 +12,10 @@ code {
   margin: auto;
 }
 
+.main-menu-buttons-container .btn {
+  margin: 5px;
+}
+
 .modalIcons {
   width: 40px;
   max-height: 35px;
