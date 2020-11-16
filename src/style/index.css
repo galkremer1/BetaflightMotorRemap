@@ -71,3 +71,7 @@ tbody tr {
   width: 90px;
   margin: 10px;
 }
+
+.ui.labeled.input {
+  margin-left: -160px;
+}

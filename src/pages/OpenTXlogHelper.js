@@ -15,9 +15,15 @@ export default class OpenTxLogHelper extends Component {
       adjustedCsvData: {},
       mappedHeaders: [],
       mappedValues: {},
-      timeShift: null,
+      timeShift: 0,
       isModalOpen: false,
     };
+  }
+
+  handleTimeShift(timeShift) {
+    this.setState({
+      timeShift,
+    });
   }
 
   calculateTimeCode(date1, date2) {
@@ -39,7 +45,9 @@ export default class OpenTxLogHelper extends Component {
     }
 
     const diff =
-      calculateTotalMs(date1.split(":")) - calculateTotalMs(date2.split(":"));
+      calculateTotalMs(date1.split(":")) -
+      calculateTotalMs(date2.split(":")) +
+      parseInt(this.state.timeShift);
     return moment.utc(Math.round(diff)).format("HH:mm:ss,SSS");
   }
 
@@ -71,7 +79,7 @@ export default class OpenTxLogHelper extends Component {
     return arr;
   }
 
-  handleFileChange(data, fileInfo) {
+  handleFileChange(data) {
     this.setState({
       csvFileData: data,
       adjustedCsvData: this.initAdjustedCsvData(data),
@@ -85,6 +93,11 @@ export default class OpenTxLogHelper extends Component {
     let srtSequence = "";
 
     for (let i = 0; i < csvArray.length - 2; i++) {
+      debugger;
+      if (csvArray[i].timeCode.startsWith("23")) {
+        continue;
+      }
+      debugger;
       const srt = {};
       srt.nr = i + 1 + newline;
       srt.timeCode =
@@ -152,13 +165,21 @@ export default class OpenTxLogHelper extends Component {
   }
 
   render() {
-    const { csvFileData, mappedHeaders, isModalOpen } = this.state;
+    const { csvFileData, mappedHeaders, isModalOpen, timeShift } = this.state;
 
     return (
       <Grid padded style={{ width: "100%" }}>
         <Grid.Column width={100}>
           <Segment>
             <CSVReader onFileLoaded={this.handleFileChange.bind(this)} />
+            <Input
+              onChange={(e) => this.handleTimeShift(e.target.value)}
+              placeholder={"Milliseconds"}
+              type="number"
+              value={timeShift}
+              label="Time Shift"
+              disabled={!!csvFileData}
+            />
           </Segment>
           {csvFileData && (
             <>
@@ -184,13 +205,6 @@ export default class OpenTxLogHelper extends Component {
                   })}
                 </div>
               </Segment>
-              <Input
-                // onChange={(e) => this.handleInputOnChange(value, e)}
-                placeholder={"Milliseconds"}
-                type="number"
-                label="Time Shift"
-              />
-              <br />
               <Button onClick={this.createSrtRows.bind(this)}>
                 Export To SRT
               </Button>
