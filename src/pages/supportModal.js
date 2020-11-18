@@ -12,6 +12,7 @@ import BanggoodLogo from "../images/banggood.png";
 import GearbestLogo from "../images/gearbest.png";
 import RDQ from "../images/rdq.png";
 import HobbyCool from "../images/hobbycool.png";
+import Patreon from "../images/patreon.png";
 
 Modal.setAppElement("#root");
 
@@ -62,6 +63,20 @@ export default class SupportModal extends Component {
                 <ListItemText primary="Subscribe To My YouTube Channel" />
                 <ListItemIcon>
                   <img alt="YouTube" className="modalIcons" src={YouYube} />
+                </ListItemIcon>
+              </ListItem>
+              <ListItem
+                button
+                onClick={() =>
+                  window.open("https://www.patreon.com/GalKremer", "_blank")
+                }
+              >
+                <ListItemIcon>
+                  <img alt="logo" className="modalIcons" src={logo} />
+                </ListItemIcon>
+                <ListItemText primary="Support Me On Patreon" />
+                <ListItemIcon>
+                  <img alt="Patreon" className="modalIcons" src={Patreon} />
                 </ListItemIcon>
               </ListItem>
 

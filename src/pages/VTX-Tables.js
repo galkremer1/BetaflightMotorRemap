@@ -1,6 +1,5 @@
 import React, { Component } from "react";
-import CSVReader from "react-csv-reader";
-import { Slider } from "react-semantic-ui-range";
+
 import "semantic-ui-css/semantic.min.css";
 import {
   Segment,
@@ -11,6 +10,8 @@ import {
   Menu,
   Table,
 } from "semantic-ui-react";
+import underConstruction from "../images/under-construction.png";
+
 import styled from "styled-components";
 
 const MaterialInput = styled(Input)`
@@ -34,20 +35,12 @@ export default class VtxTables extends Component {
   }
 
   render() {
-    const tableHeaderRows = [
-      "PWM",
-      "Thrust",
-      "Voltage",
-      "Current",
-      "RPM",
-      "Power",
-      "Efficency",
-    ];
-    const { csvFileData } = this.state;
-
     return (
       <Grid padded style={{ width: "100%" }}>
-        VTX Tables
+        <img
+          src={underConstruction}
+          style={{ width: "200px", margin: "auto" }}
+        />
       </Grid>
     );
   }
