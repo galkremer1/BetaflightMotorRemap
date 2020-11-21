@@ -12,9 +12,19 @@ import logo from "./images/kremerfpvlogo.png";
 export default class App extends Component {
   constructor(props) {
     super(props);
+    const { hash } = window.location;
+    let activeItem = "Motors Remap Tool";
+    switch (hash) {
+      case "#remap":
+        activeItem = "Motors Remap Tool";
+        break;
+      case "#subtitles":
+        activeItem = "DJI Subtitles Tool";
+        break;
+    }
 
     this.state = {
-      activeItem: "Motors Remap Tool",
+      activeItem,
       menuItems: [
         "Motors Remap Tool",
         "DJI Subtitles Tool",
