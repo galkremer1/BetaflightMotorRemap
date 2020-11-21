@@ -3,6 +3,8 @@ import MotorsRemapTool from "./pages/MotorsRemapTool";
 import MotorsThrustTool from "./pages/MotorsThrustTool";
 import OpenTxLogHelper from "./pages/OpenTXlogHelper";
 import VtxTabls from "./pages/VTX-Tables";
+import About from "./pages/About";
+
 import { Grid, Menu, Segment } from "semantic-ui-react";
 
 import logo from "./images/kremerfpvlogo.png";
@@ -60,6 +62,8 @@ export default class App extends Component {
         return <OpenTxLogHelper />;
       case "VTX Tables":
         return <VtxTabls />;
+      case "About":
+        return <About />;
     }
   };
 
@@ -67,39 +71,39 @@ export default class App extends Component {
     const { menuItems, activeItem } = this.state;
     return (
       <>
-        <div
-          style={{ cursor: "pointer" }}
-          onClick={() => window.open("http://youtube.com/kremerFPV", "_blank")}
-        >
-          <img alt="logo" className="logo" src={logo} />
-          Gal Kremer
-        </div>
+        {/* <Grid> */}
+        <Menu stackable>
+          <Menu.Item style={{ width: "60px", padding: "10px 0" }}>
+            <div
+              style={{ cursor: "pointer" }}
+              onClick={() =>
+                window.open("http://youtube.com/kremerFPV", "_blank")
+              }
+            >
+              <img alt="logo" className="logo" src={logo} />
+            </div>
+          </Menu.Item>
+          {menuItems.map((item) => {
+            return (
+              <Menu.Item
+                name={item}
+                active={activeItem === item}
+                onClick={this.handleItemClick}
+              />
+            );
+          })}
+        </Menu>
 
-        <Grid>
-          <Grid.Column width={3}>
-            <Menu fluid vertical tabular>
-              {menuItems.map((item) => {
-                return (
-                  <Menu.Item
-                    name={item}
-                    active={activeItem === item}
-                    onClick={this.handleItemClick}
-                  />
-                );
-              })}
-            </Menu>
-          </Grid.Column>
-
-          <Grid.Column stretched width={13}>
-            <Segment>
-              <div className="container" style={{ textAlign: "center" }}>
-                <div className={"jumbotron"}>
-                  <div className="row">{this.renderActiveItem(activeItem)}</div>
-                </div>
-              </div>
-            </Segment>
-          </Grid.Column>
-        </Grid>
+        {/* <Grid.Column stretched width={13}> */}
+        <Segment>
+          <div className="container" style={{ textAlign: "center" }}>
+            <div className={"jumbotron"} style={{ minHeight: "500px" }}>
+              <div className="row">{this.renderActiveItem(activeItem)}</div>
+            </div>
+          </div>
+        </Segment>
+        {/* </Grid.Column> */}
+        {/* </Grid> */}
       </>
     );
   }

@@ -163,6 +163,14 @@ export default class OpenTxLogHelper extends Component {
       ...mappedValues,
     });
   }
+  resetForm() {
+    this.setState({
+      adjustedCsvData: null,
+      csvFileData: null,
+      timeShift: 0,
+    });
+    document.getElementById("react-csv-reader-input").value = "";
+  }
 
   render() {
     const { csvFileData, mappedHeaders, isModalOpen, timeShift } = this.state;
@@ -183,7 +191,7 @@ export default class OpenTxLogHelper extends Component {
           </Segment>
           {csvFileData && (
             <>
-              {" "}
+              <Button onClick={this.resetForm.bind(this)}>Reset</Button>
               <Segment>
                 <div>Choose Elements</div>
                 <div style={{ display: "flex", flexWrap: "wrap" }}>
