@@ -187,7 +187,8 @@ export default class OpenTxLogHelper extends Component {
               value={timeShift}
               label="Time Shift"
               disabled={!!csvFileData}
-            />
+            />{" "}
+            <span>ms</span>
           </Segment>
           {csvFileData && (
             <>
