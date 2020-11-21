@@ -185,7 +185,7 @@ export default class OpenTxLogHelper extends Component {
               placeholder={"Milliseconds"}
               type="number"
               value={timeShift}
-              label="Time Shift"
+              label="Time Shift (ms)"
               disabled={!!csvFileData}
             />{" "}
             <span>ms</span>
