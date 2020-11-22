@@ -4,7 +4,7 @@ self.__precacheManifest = [
     "url": "/static/media/brand-icons.c5ebe0b3.ttf"
   },
   {
-    "revision": "c85660a2a748f1008bc8",
+    "revision": "8f38339ba2e4c5c0b9f3",
     "url": "/static/css/main.fe0550d3.chunk.css"
   },
   {
@@ -24,10 +24,6 @@ self.__precacheManifest = [
     "url": "/static/media/kremerfpvlogo.b9cf8ce5.png"
   },
   {
-    "revision": "9c74e172f87984c48ddf5c8108cabe67",
-    "url": "/static/media/flags.9c74e172.png"
-  },
-  {
     "revision": "cd6c777f1945164224dee082abaea03a",
     "url": "/static/media/outline-icons.cd6c777f.woff2"
   },
@@ -42,6 +38,10 @@ self.__precacheManifest = [
   {
     "revision": "ad97afd3337e8cda302d10ff5a4026b8",
     "url": "/static/media/outline-icons.ad97afd3.ttf"
+  },
+  {
+    "revision": "9c74e172f87984c48ddf5c8108cabe67",
+    "url": "/static/media/flags.9c74e172.png"
   },
   {
     "revision": "0ab54153eeeca0ce03978cc463b257f7",
@@ -64,16 +64,16 @@ self.__precacheManifest = [
     "url": "/static/media/icons.b87b9ba5.ttf"
   },
   {
-    "revision": "13db00b7a34fee4d819ab7f9838cc428",
-    "url": "/static/media/brand-icons.13db00b7.eot"
-  },
-  {
     "revision": "8e3c7f5520f5ae906c6cf6d7f3ddcd19",
     "url": "/static/media/icons.8e3c7f55.eot"
   },
   {
-    "revision": "c85660a2a748f1008bc8",
-    "url": "/static/js/main.c9ac81c6.chunk.js"
+    "revision": "13db00b7a34fee4d819ab7f9838cc428",
+    "url": "/static/media/brand-icons.13db00b7.eot"
+  },
+  {
+    "revision": "8f38339ba2e4c5c0b9f3",
+    "url": "/static/js/main.682fdbae.chunk.js"
   },
   {
     "revision": "82f60bd0b94a1ed68b1e6e309ce2e8c3",
@@ -144,7 +144,7 @@ self.__precacheManifest = [
     "url": "/static/css/2.14d97c79.chunk.css"
   },
   {
-    "revision": "85103eada223df706a07b05d08c00c4d",
+    "revision": "98d567646808fd6a4e2f15a9df803e47",
     "url": "/index.html"
   }
 ];
