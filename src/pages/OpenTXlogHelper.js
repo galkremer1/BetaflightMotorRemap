@@ -51,30 +51,95 @@ export default class OpenTxLogHelper extends Component {
     return moment.utc(Math.round(diff)).format("HH:mm:ss,SSS");
   }
 
+  calculateDistance(lat2, lon2, previousObject) {
+    const { lat: lat1, lon: lon1 } = previousObject;
+    const R = 6371000;
+    const dLat = ((lat2 - lat1) * Math.PI) / 180;
+    const dLon = ((lon2 - lon1) * Math.PI) / 180;
+    const a =
+      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+      Math.cos((lat1 * Math.PI) / 180) *
+        Math.cos((lat2 * Math.PI) / 180) *
+        Math.sin(dLon / 2) *
+        Math.sin(dLon / 2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    const d = R * c;
+
+    // Distance in meters, rounded to an integer.
+    return Math.round(d);
+  }
+
   initAdjustedCsvData(data) {
     const arr = [];
     const mappedHeaders = {};
-    let initialTime;
+    let initialTime, previousObject, firstPosition;
+    const travelDistanceArr = [];
+    const homeDistanceArr = [];
+
+    function calculateTravelDistance(arr, i) {
+      let sum = 0;
+      arr.forEach((element, t) => {
+        if (t < i) {
+          sum += element;
+        }
+      });
+      return sum;
+    }
     data.forEach((element, i) => {
       if (i === 0) {
         element.forEach((header, i) => {
           mappedHeaders[header] = i;
         });
+        if (mappedHeaders["GPS"]) {
+          mappedHeaders["Home Distance(m)"] = element.length;
+          mappedHeaders["Total Distance(m)"] = element.length + 1;
+        }
         this.setState({
           mappedHeaders,
         });
       } else {
+        let lat, lon;
         if (i === 1) {
           initialTime = element[mappedHeaders["Time"]];
+        } else {
+          if (mappedHeaders["GPS"]) {
+            [lat, lon] = element[mappedHeaders["GPS"]].split(" ");
+            if (!firstPosition) {
+              firstPosition = { lat, lon };
+            }
+          }
         }
+        let distance, homeDistance;
+        if (previousObject && previousObject.lon) {
+          distance = this.calculateDistance(lat, lon, previousObject);
+          homeDistance = this.calculateDistance(lat, lon, firstPosition);
+        } else {
+          distance = 0;
+          homeDistance = 0;
+        }
+
         const obj = {
           timeCode: this.calculateTimeCode(
             element[mappedHeaders["Time"]],
             initialTime
           ),
+          // "Home Distance(m)": distance,
         };
+        travelDistanceArr.push(distance);
+        homeDistanceArr.push(homeDistance);
+        previousObject = { ...obj, lat, lon };
         arr.push(obj);
       }
+    });
+    const adjustedData = data.map((element, i) => {
+      if (i > 0) {
+        element.push(homeDistanceArr[i - 1]);
+        element.push(calculateTravelDistance(travelDistanceArr, i));
+      }
+      return element;
+    });
+    this.setState({
+      csvFileData: adjustedData,
     });
     return arr;
   }
@@ -93,11 +158,9 @@ export default class OpenTxLogHelper extends Component {
     let srtSequence = "";
 
     for (let i = 0; i < csvArray.length - 2; i++) {
-      debugger;
       if (csvArray[i].timeCode.startsWith("23")) {
         continue;
       }
-      debugger;
       const srt = {};
       srt.nr = i + 1 + newline;
       srt.timeCode =
@@ -114,11 +177,11 @@ export default class OpenTxLogHelper extends Component {
       srt.newline = newline;
       srtSequence += srt.nr + srt.timeCode + srt.caption + srt.newline;
     }
-    this.exportToCsv(srtSequence, "subtitle.srt");
+    this.exportToSrt(srtSequence, "subtitle.srt");
     this.toggleModal();
   }
 
-  exportToCsv(csvFile, filename) {
+  exportToSrt(csvFile, filename) {
     var blob = new Blob([csvFile], { type: "text/srt;charset=utf-8;" });
     if (navigator.msSaveBlob) {
       // IE 10+
