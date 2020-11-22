@@ -4,7 +4,7 @@ self.__precacheManifest = [
     "url": "/static/media/brand-icons.c5ebe0b3.ttf"
   },
   {
-    "revision": "312cecf3ddc7c2d8b88f",
+    "revision": "c85660a2a748f1008bc8",
     "url": "/static/css/main.fe0550d3.chunk.css"
   },
   {
@@ -16,32 +16,32 @@ self.__precacheManifest = [
     "url": "/static/media/patreon.e1abd3fd.png"
   },
   {
-    "revision": "b53504f9990fb45c1f53",
-    "url": "/static/js/2.61571c4b.chunk.js"
+    "revision": "533f480c61cb273aa25b",
+    "url": "/static/js/2.2aba2b29.chunk.js"
   },
   {
     "revision": "b9cf8ce5743db4f9099c4d8a59ea541a",
     "url": "/static/media/kremerfpvlogo.b9cf8ce5.png"
   },
   {
-    "revision": "ef60a4f6c25ef7f39f2d25a748dbecfe",
-    "url": "/static/media/outline-icons.ef60a4f6.woff"
+    "revision": "9c74e172f87984c48ddf5c8108cabe67",
+    "url": "/static/media/flags.9c74e172.png"
   },
   {
     "revision": "cd6c777f1945164224dee082abaea03a",
     "url": "/static/media/outline-icons.cd6c777f.woff2"
   },
   {
-    "revision": "9c74e172f87984c48ddf5c8108cabe67",
-    "url": "/static/media/flags.9c74e172.png"
-  },
-  {
-    "revision": "ad97afd3337e8cda302d10ff5a4026b8",
-    "url": "/static/media/outline-icons.ad97afd3.ttf"
+    "revision": "ef60a4f6c25ef7f39f2d25a748dbecfe",
+    "url": "/static/media/outline-icons.ef60a4f6.woff"
   },
   {
     "revision": "701ae6abd4719e9c2ada3535a497b341",
     "url": "/static/media/outline-icons.701ae6ab.eot"
+  },
+  {
+    "revision": "ad97afd3337e8cda302d10ff5a4026b8",
+    "url": "/static/media/outline-icons.ad97afd3.ttf"
   },
   {
     "revision": "0ab54153eeeca0ce03978cc463b257f7",
@@ -60,6 +60,10 @@ self.__precacheManifest = [
     "url": "/static/media/brand-icons.a046592b.woff"
   },
   {
+    "revision": "b87b9ba532ace76ae9f6edfe9f72ded2",
+    "url": "/static/media/icons.b87b9ba5.ttf"
+  },
+  {
     "revision": "13db00b7a34fee4d819ab7f9838cc428",
     "url": "/static/media/brand-icons.13db00b7.eot"
   },
@@ -68,12 +72,8 @@ self.__precacheManifest = [
     "url": "/static/media/icons.8e3c7f55.eot"
   },
   {
-    "revision": "b87b9ba532ace76ae9f6edfe9f72ded2",
-    "url": "/static/media/icons.b87b9ba5.ttf"
-  },
-  {
-    "revision": "312cecf3ddc7c2d8b88f",
-    "url": "/static/js/main.d1c7bbc3.chunk.js"
+    "revision": "c85660a2a748f1008bc8",
+    "url": "/static/js/main.c9ac81c6.chunk.js"
   },
   {
     "revision": "82f60bd0b94a1ed68b1e6e309ce2e8c3",
@@ -140,11 +140,11 @@ self.__precacheManifest = [
     "url": "/static/media/hobbycool.bc4e83cc.png"
   },
   {
-    "revision": "b53504f9990fb45c1f53",
+    "revision": "533f480c61cb273aa25b",
     "url": "/static/css/2.14d97c79.chunk.css"
   },
   {
-    "revision": "269f9d3d7c70e6489543ca6fc4f0cc40",
+    "revision": "85103eada223df706a07b05d08c00c4d",
     "url": "/index.html"
   }
 ];
