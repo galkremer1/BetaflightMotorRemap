@@ -47,7 +47,7 @@ export default class MotorsThrustTool extends Component {
 
     return (
       <Grid padded style={{ width: "100%" }}>
-        <Grid.Column width={100}>
+        <Grid.Column width={15}>
           <Segment>
             <CSVReader onFileLoaded={this.handleFileChange.bind(this)} />
           </Segment>

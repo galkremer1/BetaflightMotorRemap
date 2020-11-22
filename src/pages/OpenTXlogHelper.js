@@ -51,8 +51,9 @@ export default class OpenTxLogHelper extends Component {
     return moment.utc(Math.round(diff)).format("HH:mm:ss,SSS");
   }
 
-  calculateDistance(lat2, lon2, previousObject) {
-    const { lat: lat1, lon: lon1 } = previousObject;
+  calculateDistance(lat2, lon2, alt2, previousObject) {
+    const { lat: lat1, lon: lon1, alt: alt1 } = previousObject;
+    debugger;
     const R = 6371000;
     const dLat = ((lat2 - lat1) * Math.PI) / 180;
     const dLon = ((lon2 - lon1) * Math.PI) / 180;
@@ -64,9 +65,10 @@ export default class OpenTxLogHelper extends Component {
         Math.sin(dLon / 2);
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
     const d = R * c;
+    const e = Math.sqrt(Math.pow(alt2 - alt1, 2) + Math.pow(d, 2));
 
     // Distance in meters, rounded to an integer.
-    return Math.round(d);
+    return Math.round(e);
   }
 
   initAdjustedCsvData(data) {
@@ -105,14 +107,28 @@ export default class OpenTxLogHelper extends Component {
           if (mappedHeaders["GPS"]) {
             [lat, lon] = element[mappedHeaders["GPS"]].split(" ");
             if (!firstPosition) {
-              firstPosition = { lat, lon };
+              firstPosition = {
+                lat,
+                lon,
+                alt: Number(element[mappedHeaders["Alt(m)"]]),
+              };
             }
           }
         }
         let distance, homeDistance;
         if (previousObject && previousObject.lon) {
-          distance = this.calculateDistance(lat, lon, previousObject);
-          homeDistance = this.calculateDistance(lat, lon, firstPosition);
+          distance = this.calculateDistance(
+            lat,
+            lon,
+            Number(element[mappedHeaders["Alt(m)"]]),
+            previousObject
+          );
+          homeDistance = this.calculateDistance(
+            lat,
+            lon,
+            Number(element[mappedHeaders["Alt(m)"]]),
+            firstPosition
+          );
         } else {
           distance = 0;
           homeDistance = 0;
@@ -123,11 +139,15 @@ export default class OpenTxLogHelper extends Component {
             element[mappedHeaders["Time"]],
             initialTime
           ),
-          // "Home Distance(m)": distance,
         };
         travelDistanceArr.push(distance);
         homeDistanceArr.push(homeDistance);
-        previousObject = { ...obj, lat, lon };
+        previousObject = {
+          ...obj,
+          lat,
+          lon,
+          alt: Number(element[mappedHeaders["Alt(m)"]]),
+        };
         arr.push(obj);
       }
     });
