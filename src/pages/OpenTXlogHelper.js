@@ -264,62 +264,68 @@ export default class OpenTxLogHelper extends Component {
     const { csvFileData, mappedHeaders, isModalOpen, timeShift } = this.state;
 
     return (
-      <Grid padded style={{ width: "100%" }}>
-        <Grid.Column width={100}>
-          <Segment className="opentx-header">
-            <CSVReader onFileLoaded={this.handleFileChange.bind(this)} />
-            <Input
-              onChange={(e) => this.handleTimeShift(e.target.value)}
-              placeholder={"Milliseconds"}
-              type="number"
-              value={timeShift}
-              label="Time Shift (ms)"
-              disabled={!!csvFileData}
-            />
-            <Checkbox
-              onChange={(e, { checked }) => {
-                this.setState({ useAlt: checked });
-              }}
-              label={"Use Altitude Data To Calculate Distance"}
-              checked={this.state.useAlt}
-              disabled={!!csvFileData}
-            />
-          </Segment>
-          {csvFileData && (
-            <>
-              <Button onClick={this.resetForm.bind(this)}>Reset</Button>
-              <Segment>
-                <div>Choose Elements</div>
-                <div style={{ display: "flex", flexWrap: "wrap" }}>
-                  {Object.keys(mappedHeaders).map((value, i) => {
-                    return (
-                      <div key={value}>
-                        <Checkbox
-                          onChange={(e, { checked }) => {
-                            this.handleParamChange(value, checked);
-                          }}
-                          name={value}
-                        />
-                        <Input
-                          onChange={(e) => this.handleInputOnChange(value, e)}
-                          placeholder={value}
-                        />
-                      </div>
-                    );
-                  })}
-                </div>
-              </Segment>
-              <Button onClick={this.createSrtRows.bind(this)}>
-                Export To SRT
-              </Button>
-            </>
-          )}
-        </Grid.Column>
-        <SupportModal
-          isModalOpen={isModalOpen}
-          toggleModal={this.toggleModal}
-        />
-      </Grid>
+      <div className="container" style={{ textAlign: "center" }}>
+        <h3>OpenTX Logs To SRT Subtitles Exporter</h3>
+        <a href="https://youtu.be/faf6OtoYR2E" target="_blank">
+          <h4>Need Help?</h4>
+        </a>
+        <Grid padded style={{ width: "100%" }}>
+          <Grid.Column width={100}>
+            <Segment className="opentx-header">
+              <CSVReader onFileLoaded={this.handleFileChange.bind(this)} />
+              <Input
+                onChange={(e) => this.handleTimeShift(e.target.value)}
+                placeholder={"Milliseconds"}
+                type="number"
+                value={timeShift}
+                label="Time Shift (ms)"
+                disabled={!!csvFileData}
+              />
+              <Checkbox
+                onChange={(e, { checked }) => {
+                  this.setState({ useAlt: checked });
+                }}
+                label={"Use Altitude Data To Calculate Distance"}
+                checked={this.state.useAlt}
+                disabled={!!csvFileData}
+              />
+            </Segment>
+            {csvFileData && (
+              <>
+                <Button onClick={this.resetForm.bind(this)}>Reset</Button>
+                <Segment>
+                  <div>Choose Elements</div>
+                  <div style={{ display: "flex", flexWrap: "wrap" }}>
+                    {Object.keys(mappedHeaders).map((value, i) => {
+                      return (
+                        <div key={value}>
+                          <Checkbox
+                            onChange={(e, { checked }) => {
+                              this.handleParamChange(value, checked);
+                            }}
+                            name={value}
+                          />
+                          <Input
+                            onChange={(e) => this.handleInputOnChange(value, e)}
+                            placeholder={value}
+                          />
+                        </div>
+                      );
+                    })}
+                  </div>
+                </Segment>
+                <Button onClick={this.createSrtRows.bind(this)}>
+                  Export To SRT
+                </Button>
+              </>
+            )}
+          </Grid.Column>
+          <SupportModal
+            isModalOpen={isModalOpen}
+            toggleModal={this.toggleModal}
+          />
+        </Grid>
+      </div>
     );
   }
 }
