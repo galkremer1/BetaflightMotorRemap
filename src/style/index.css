@@ -75,3 +75,13 @@ tbody tr {
 .ui.labeled.input {
   margin-left: -160px;
 }
+
+.opentx-header .ui.checkbox {
+  display: block;
+  margin: auto;
+  left: -110px;
+}
+
+.opentx-header .ui.checkbox label {
+  width: 200px;
+}

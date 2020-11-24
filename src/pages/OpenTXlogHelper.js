@@ -17,6 +17,7 @@ export default class OpenTxLogHelper extends Component {
       mappedValues: {},
       timeShift: 0,
       isModalOpen: false,
+      useAlt: true,
     };
   }
 
@@ -53,7 +54,6 @@ export default class OpenTxLogHelper extends Component {
 
   calculateDistance(lat2, lon2, alt2, previousObject) {
     const { lat: lat1, lon: lon1, alt: alt1 } = previousObject;
-    debugger;
     const R = 6371000;
     const dLat = ((lat2 - lat1) * Math.PI) / 180;
     const dLon = ((lon2 - lon1) * Math.PI) / 180;
@@ -68,7 +68,11 @@ export default class OpenTxLogHelper extends Component {
     const e = Math.sqrt(Math.pow(alt2 - alt1, 2) + Math.pow(d, 2));
 
     // Distance in meters, rounded to an integer.
-    return Math.round(e);
+    if (this.state.useAlt) {
+      return Math.round(e);
+    } else {
+      return Math.round(d);
+    }
   }
 
   initAdjustedCsvData(data) {
@@ -251,6 +255,7 @@ export default class OpenTxLogHelper extends Component {
       adjustedCsvData: null,
       csvFileData: null,
       timeShift: 0,
+      useAlt: true,
     });
     document.getElementById("react-csv-reader-input").value = "";
   }
@@ -261,7 +266,7 @@ export default class OpenTxLogHelper extends Component {
     return (
       <Grid padded style={{ width: "100%" }}>
         <Grid.Column width={100}>
-          <Segment>
+          <Segment className="opentx-header">
             <CSVReader onFileLoaded={this.handleFileChange.bind(this)} />
             <Input
               onChange={(e) => this.handleTimeShift(e.target.value)}
@@ -269,6 +274,14 @@ export default class OpenTxLogHelper extends Component {
               type="number"
               value={timeShift}
               label="Time Shift (ms)"
+              disabled={!!csvFileData}
+            />
+            <Checkbox
+              onChange={(e, { checked }) => {
+                this.setState({ useAlt: checked });
+              }}
+              label={"Use Altitude Data To Calculate Distance"}
+              checked={this.state.useAlt}
               disabled={!!csvFileData}
             />
           </Segment>
