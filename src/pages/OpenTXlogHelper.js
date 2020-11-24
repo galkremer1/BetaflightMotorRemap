@@ -108,7 +108,7 @@ export default class OpenTxLogHelper extends Component {
         if (i === 1) {
           initialTime = element[mappedHeaders["Time"]];
         } else {
-          if (mappedHeaders["GPS"]) {
+          if (mappedHeaders["GPS"] && element[mappedHeaders["GPS"]]) {
             [lat, lon] = element[mappedHeaders["GPS"]].split(" ");
             if (!firstPosition) {
               firstPosition = {
