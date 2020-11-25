@@ -162,17 +162,29 @@ export default class OpenTxLogHelper extends Component {
       }
       return element;
     });
+
     this.setState({
       csvFileData: adjustedData,
     });
     return arr;
   }
 
-  handleFileChange(data) {
-    this.setState({
-      csvFileData: data,
-      adjustedCsvData: this.initAdjustedCsvData(data),
-    });
+  handleFileChange(data, fileInfo) {
+    this.setState(
+      {
+        adjustedCsvData: null,
+        csvFileData: null,
+        timeShift: 0,
+        useAlt: true,
+      },
+      () => {
+        this.setState({
+          csvFileData: data,
+          adjustedCsvData: this.initAdjustedCsvData(data),
+          fileInfo,
+        });
+      }
+    );
   }
 
   createSrtRows() {
@@ -201,7 +213,8 @@ export default class OpenTxLogHelper extends Component {
       srt.newline = newline;
       srtSequence += srt.nr + srt.timeCode + srt.caption + srt.newline;
     }
-    this.exportToSrt(srtSequence, "subtitle.srt");
+    const fileName = this.state.fileInfo.name.split(".csv")[0] + ".srt";
+    this.exportToSrt(srtSequence, fileName);
     this.toggleModal();
   }
 
@@ -226,10 +239,20 @@ export default class OpenTxLogHelper extends Component {
 
   handleParamChange(target, isChecked) {
     const { csvFileData, adjustedCsvData, mappedHeaders } = this.state;
+    let index = mappedHeaders[target];
+    const firstElement = csvFileData[1];
+    switch (target) {
+      case "Home Distance(m)":
+        index = firstElement.length - 2;
+        break;
+      case "Total Distance(m)":
+        index = firstElement.length - 1;
+        break;
+    }
     csvFileData.forEach((element, i) => {
       if (i > 0 && i < csvFileData.length - 1) {
         if (isChecked) {
-          adjustedCsvData[i - 1][target] = element[mappedHeaders[target]];
+          adjustedCsvData[i - 1][target] = element[index];
         } else {
           delete adjustedCsvData[i - 1][target];
         }
