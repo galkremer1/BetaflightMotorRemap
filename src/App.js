@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import MotorsRemapTool from "./pages/MotorsRemapTool";
 import MotorsThrustTool from "./pages/MotorsThrustTool";
 import OpenTxLogHelper from "./pages/OpenTXlogHelper";
+import DashwareHelper from "./pages/DashwareHelper";
 import VtxTabls from "./pages/VTX-Tables";
 import About from "./pages/About";
 
@@ -28,6 +29,7 @@ export default class App extends Component {
       menuItems: [
         "Motors Remap Tool",
         "DJI Subtitles Tool",
+        "Dashware Helper",
         "Motors Thrust Tool",
         "VTX Tables",
         "About",
@@ -70,6 +72,8 @@ export default class App extends Component {
         return <MotorsRemapTool />;
       case "DJI Subtitles Tool":
         return <OpenTxLogHelper />;
+      case "Dashware Helper":
+        return <DashwareHelper />;
       case "VTX Tables":
         return <VtxTabls />;
       case "About":
