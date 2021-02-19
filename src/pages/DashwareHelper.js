@@ -125,7 +125,7 @@ export default class DashwareHelper extends Component {
 
     data[0] = data[0].concat(["Home Distance", "Total Distance", "lat", "lon"]);
     const adjustedData = data.map((element, i) => {
-      if (i > 0) {
+      if (i > 0 && element[mappedHeaders["GPS"]]) {
         let lat, lon;
         [lat, lon] = element[mappedHeaders["GPS"]].split(" ");
         element.push(homeDistanceArr[i - 1]);
@@ -135,11 +135,69 @@ export default class DashwareHelper extends Component {
       }
       return element;
     });
-    this.setState({
-      csvFileData: adjustedData,
-    });
     return arr;
   }
+
+  calculateTimeDiff(date1, date2) {
+    if (!date1 || !date2) {
+      return;
+    }
+
+    function calculateTotalMs(time) {
+      const timeObj = {
+        hour: parseInt(time[0]),
+        minute: parseInt(time[1]),
+        second: Math.floor(parseFloat(time[2])),
+        millisecond: parseFloat(time[2]) - Math.floor(parseFloat(time[2])),
+      };
+      return (
+        (timeObj.hour * 60 * 60 + timeObj.minute * 60 + timeObj.second) * 1000 +
+        timeObj.millisecond
+      );
+    }
+
+    const diff =
+      calculateTotalMs(date1.split(":")) - calculateTotalMs(date2.split(":"));
+    return diff;
+  }
+
+  splitCsvData = (data) => {
+    const mappedHeaders = {};
+    const splittedIndexes = [];
+    const splittedArrays = [];
+    const headerArray = data[0];
+    headerArray.forEach((header, i) => {
+      mappedHeaders[header] = i;
+    });
+    let previousTimeDiff;
+    data.forEach((element, i) => {
+      if (i > 1) {
+        const j = mappedHeaders["Time"];
+        const timeDiff =
+          Math.round(this.calculateTimeDiff(element[j], data[i - 1][j])) / 1000;
+        if (previousTimeDiff && 3 * previousTimeDiff < timeDiff) {
+          splittedIndexes.push(i);
+        }
+        previousTimeDiff = timeDiff;
+      }
+    });
+    let previousIndex = 0;
+    if (splittedIndexes.length > 0) {
+      splittedIndexes.push(data.length - 1);
+    }
+    splittedIndexes.forEach((index, i) => {
+      splittedArrays.push(data.slice(previousIndex, index));
+      if (i > 0) {
+        splittedArrays[i].unshift(headerArray);
+      }
+      previousIndex = index;
+    });
+    if (splittedArrays.length > 1) {
+      return splittedArrays;
+    } else {
+      return [data];
+    }
+  };
 
   handleFileChange(data, fileInfo) {
     this.setState(
@@ -149,9 +207,12 @@ export default class DashwareHelper extends Component {
         useAlt: true,
       },
       () => {
+        const splittedData = this.splitCsvData(data);
         this.setState({
-          csvFileData: data,
-          adjustedCsvData: this.initAdjustedCsvData(data),
+          csvFileData: splittedData,
+          adjustedCsvData: splittedData.map((data) =>
+            this.initAdjustedCsvData(data)
+          ),
           fileInfo,
         });
       }
@@ -174,7 +235,6 @@ export default class DashwareHelper extends Component {
 
   render() {
     const { csvFileData, isModalOpen } = this.state;
-
     return (
       <div className="container" style={{ textAlign: "center" }}>
         <h3>Dashware Helper</h3>
@@ -200,14 +260,20 @@ export default class DashwareHelper extends Component {
                 {/* <Button onClick={this.exportToCSV.bind(this)}>
                   Export To CSV
                 </Button> */}
-                <CSVLink
-                  filename={
-                    this.state.fileInfo.name.split(".csv")[0] + "-adjusted.csv"
-                  }
-                  data={csvFileData}
-                >
-                  Download me
-                </CSVLink>
+                {csvFileData.map((data, i) => {
+                  return (
+                    <div>
+                      <CSVLink
+                        filename={`${
+                          this.state.fileInfo.name.split(".csv")[0]
+                        }-${i}-adjusted.csv`}
+                        data={data}
+                      >
+                        {`Download Log File - ${i}`}
+                      </CSVLink>
+                    </div>
+                  );
+                })}
               </>
             )}
           </Grid.Column>
