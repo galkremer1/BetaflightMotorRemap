@@ -123,7 +123,12 @@ export default class DashwareHelper extends Component {
       }
     });
 
-    data[0] = data[0].concat(["Home Distance", "Total Distance", "lat", "lon"]);
+    data[0] = data[0].concat([
+      "Current Distance",
+      "Total Distance",
+      "Latitude",
+      "Longitude",
+    ]);
     const adjustedData = data.map((element, i) => {
       if (i > 0 && element[mappedHeaders["GPS"]]) {
         let lat, lon;
@@ -234,7 +239,7 @@ export default class DashwareHelper extends Component {
   }
 
   render() {
-    const { csvFileData, isModalOpen } = this.state;
+    const { csvFileData, isModalOpen, mappedHeaders } = this.state;
     return (
       <div className="container" style={{ textAlign: "center" }}>
         <h3>Dashware Helper</h3>
@@ -261,18 +266,28 @@ export default class DashwareHelper extends Component {
                   Export To CSV
                 </Button> */}
                 {csvFileData.map((data, i) => {
-                  return (
-                    <div>
-                      <CSVLink
-                        filename={`${
-                          this.state.fileInfo.name.split(".csv")[0]
-                        }-${i}-adjusted.csv`}
-                        data={data}
-                      >
-                        {`Download Log File - ${i}`}
-                      </CSVLink>
-                    </div>
-                  );
+                  if (data.length > 3) {
+                    const timeDiff =
+                      Math.round(
+                        this.calculateTimeDiff(
+                          data[3][mappedHeaders["Time"]],
+                          data[2][mappedHeaders["Time"]]
+                        )
+                      ) / 1000;
+                    const seconds = (data.length - 1) * timeDiff;
+                    return (
+                      <div>
+                        <CSVLink
+                          filename={`${
+                            this.state.fileInfo.name.split(".csv")[0]
+                          }-${i}-adjusted.csv`}
+                          data={data}
+                        >
+                          {`Download Log File - ${i} - ${seconds} Seconds`}
+                        </CSVLink>
+                      </div>
+                    );
+                  }
                 })}
               </>
             )}
