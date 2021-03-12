@@ -32,10 +32,10 @@ export default class DashwareHelper extends Component {
         Math.sin(dLon / 2);
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
     const d = R * c;
-    const e = Math.sqrt(Math.pow(alt2 - alt1, 2) + Math.pow(d, 2));
 
     // Distance in meters, rounded to an integer.
     if (this.state.useAlt) {
+      const e = Math.sqrt(Math.pow(alt2 - alt1, 2) + Math.pow(d, 2));
       return Math.round(e);
     } else {
       return Math.round(d);
@@ -140,6 +140,7 @@ export default class DashwareHelper extends Component {
       }
       return element;
     });
+    data.unshift(["OpenTX Import"]);
     return arr;
   }
 
